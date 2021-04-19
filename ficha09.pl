@@ -83,6 +83,11 @@ cicloK(G,A,P,Km,[E|Ep1]) :- adjacente(B,A,E,K,G),
                             length(P1,L), L > 2,
                             append(P1,[A],P).
 
+%--------------------------------- 
+%extra encontrar todos os caminhos entre A -> b
+
+todos(A,B,G,L) :- findall(P,caminho(G,A,B,P),L).
+
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do meta-predicado nao: Questao -> {V,F}
 
