@@ -84,7 +84,7 @@ cicloK(G,A,P,Km,[E|Ep1]) :- adjacente(B,A,E,K,G),
                             append(P1,[A],P).
 
 %--------------------------------- 
-%extra encontrar todos os caminhos entre A -> b
+%extra encontrar todos os caminhos entre A -> B
 
 todos(A,B,G,L) :- findall(P,caminho(G,A,B,P),L).
 
