@@ -31,7 +31,7 @@ transicao(jarros(V1, V2), encher(1, 2), jarros(NV1, NV2)):-
 
 transicao(jarros(V1, V2), encher(2, 1), jarros(NV1, NV2)):- 
 	V2 > 0,
-	NV2 is max(V2 - 5 + V1, 0), 
+	NV2 is max(V2 - 8 + V1, 0), 
 	NV2 < V2, 
 	NV1 is V1 + V2 - NV2.
 
