@@ -43,6 +43,7 @@ estima(t,0).
 
 resolve_pp(Nodo,[Nodo|Caminho]) :- profundidadeprimeiro1(Nodo,[Nodo],Caminho).
 
+goal(t).
 profundidadeprimeiro1(Nodo,_,[]) :- goal(Nodo).
 
 profundidadeprimeiro1(Nodo,Historico,[ProxNodo|Caminho]) :- adjacente(Nodo,ProxNodo),
