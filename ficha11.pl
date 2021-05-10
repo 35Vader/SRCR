@@ -88,7 +88,7 @@ membro(X, [X|_]).
 membro(X, [_|Xs]):-
 	membro(X, Xs).
 
-inverso(Xs,Ys) :- inicial(Xs,[],Ys).
+inverso(Xs,Ys) :- inverso(Xs,[],Ys).
 
 inverso([],Xs,Xs).
 inverso([X|Xs],Ys,Zs) :- inverso(Xs,[X|Ys],Zs).
