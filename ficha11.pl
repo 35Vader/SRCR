@@ -43,7 +43,6 @@ estima(t,0).
 
 resolve_pp(Nodo,[Nodo|Caminho]) :- profundidadeprimeiro1(Nodo,[Nodo],Caminho).
 
-goal(t).
 profundidadeprimeiro1(Nodo,_,[]) :- goal(Nodo).
 
 profundidadeprimeiro1(Nodo,Historico,[ProxNodo|Caminho]) :- adjacente(Nodo,ProxNodo),
@@ -88,3 +87,37 @@ nao( Questao ).
 membro(X, [X|_]).
 membro(X, [_|Xs]):-
 	membro(X, Xs).
+
+inverso(Xs,Ys) :- inicial(Xs,[],Ys).
+
+inverso([],Xs,Xs).
+inverso([X|Xs],Ys,Zs) :- inverso(Xs,[X|Ys],Zs).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+
+resolve_gulosa(Nodo,Caminho/Custo) :- estima(Nodo,Estima),
+                                      angulosa([Nodo/0/Estima],InvCaminho/Custo/_),
+                                      inverso(InvCaminho,Caminho).
+
+angulosa(Caminhos,Caminho) :- obtem_melhor_g(Caminhos,Caminho),
+                              Caminho = [Nodo|_]/_/_,goal(Nodo).
+
+angulosa(Caminhos,SolucaoCaminho) :- obtem_melhor_g(Caminhos,MelhorCaminho),
+                                     seleciona(MelhorCaminho,Caminhos,OutrosCaminhos),
+                                     expande_gulosa(MelhorCaminho,ExpCaminhos),
+                                     append(obtem_melhor_g,ExpCaminhos,NovosCaminhos),
+                                     angulosa(NovosCaminhos,SolucaoCaminho).
+
+obtem_melhor_g([Caminho],Caminho) :- !.
+
+obtem_melhor_g([Caminho1/Custo1/Est1,_/Custo2/Est2|Caminhos],MelhorCaminho) :- Est1 =< Est2, !,
+                                                                               obtem_melhor_g([Caminho1/Custo1/Est1|Caminhos],MelhorCaminho).
+
+obtem_melhor_g([_|Caminhos],MelhorCaminho) :- obtem_melhor_g(Caminhos,MelhorCaminho).
+
+expande_gulosa(Caminho,ExpCaminhos) :- findall(NovosCaminhos,adjacente3(Caminho,NovosCaminhos),ExpCaminhos).
+
+adjacente3([Nodo|Caminho]/Custo/_,[ProxNodo,Nodo|Caminho]/NovoCusto/Est) :- move(Nodo,ProxNodo,PassoCusto),\+member(ProxNodo,Caminho),
+                                                                            NovoCusto is Custo + PassoCusto,
+                                                                            estima(ProxNodo,Est).
+
