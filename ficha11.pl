@@ -110,10 +110,11 @@ angulosa(Caminhos,SolucaoCaminho) :- obtem_melhor_g(Caminhos,MelhorCaminho),
 
 obtem_melhor_g([Caminho],Caminho) :- !.
 
-obtem_melhor_g([Caminho1/Custo1/Est1,_/Custo2/Est2|Caminhos],MelhorCaminho) :- Est1 =< Est2, !,
-                                                                               obtem_melhor_g([Caminho1/Custo1/Est1|Caminhos],MelhorCaminho).
+obtem_melhorg([Caminho1/Custo1/Est1,/Custo2/Est2|Caminhos],MelhorCaminho) :- 
+                    Est1 =< Est2, !,
+                    obtem_melhor_g([Caminho1/Custo1/Est1|Caminhos],MelhorCaminho).
 
-obtem_melhor_g([_|Caminhos],MelhorCaminho) :- obtem_melhor_g(Caminhos,MelhorCaminho).
+obtem_melhorg([|Caminhos],MelhorCaminho) :- obtem_melhor_g(Caminhos,MelhorCaminho).
 
 expande_gulosa(Caminho,ExpCaminhos) :- findall(NovosCaminhos,adjacente3(Caminho,NovosCaminhos),ExpCaminhos).
 
